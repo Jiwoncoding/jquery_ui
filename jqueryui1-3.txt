@@ -15,7 +15,7 @@ $.widget( "tj.todo", $.tj.todo, {
         this._super( key, value );
         if ( key === "sortable" ) {
             if ( value ) {
-                this.element.sortable();
+                this.element.sortable();  // false에서 true로
             }
             if ( !value && this._isSortable() ) {
                 this.element.sortable( "destroy" );
@@ -23,7 +23,7 @@ $.widget( "tj.todo", $.tj.todo, {
         }
     },
     _isSortable: function() {
-        return this.element.is( ":data(ui-sortable)" );
+        return this.element.is( ":data(ui-sortable)" );  // 요소가 정렬가능한지 확인
     },
     _destroy: function() {
         if ( this._isSortable() ) {
