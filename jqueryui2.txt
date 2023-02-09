@@ -1,0 +1,43 @@
+// 방향 옵션이 있는 탭 위젯 확장
+
+
+$.widget( "tj.tabs", $.ui.tabs, {
+    options: {
+        orientation: "horizontal"
+    },
+    _create: function() {
+        this._super();   // 동일한 이름의 부모 위젯 메서드에 액세스하기위해 위젯 팩토리가 제공하는 유틸리티 함수
+        this._handleOrientation();
+    },
+    _handleOrientation: function() {
+        this.element.toggleClass( "ui-tabs-vertical",
+            this.options.orientation === "vertical" );
+    },
+    _setOption: function( key, value ) {
+        this._superApply( arguments );  // _super()와 같이 같은 이름의 부모 위젯의 메서드를 호출하지만 메소드가 허용하는 인수에 차이가 있다
+        if ( key === "orientation" ) {
+            this._handleOrientation();
+        }
+    },
+    _destroy: function() {
+        this._super();
+        this.element.removeClass( "ui-tabs-vertical" );
+    }
+});
+
+$( "#tabs" ).tabs({ orientation: "vertical" });
+
+
+
+// this._super VS this._superApply(arguments)
+
+// this._super([인수][,...])
+인수 유형은 객체
+지정된 인수를 사용하여 상위 위젯에서 동일한 이름의 메서드를 호출
+본질 .call()
+
+//this._superApply(인수)
+인수 유형은 배열 
+인수 배열을 사용하여 상위 위젯에서 동일한 이름의 메서드를 호출
+본질 .apply()
+
