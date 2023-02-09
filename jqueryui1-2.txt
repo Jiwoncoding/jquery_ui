@@ -1,0 +1,32 @@
+// 항목을 제거할 수 있는 todo 위젯 확장
+
+$.widget( "tj.todo", $.tj.todo, {
+    _create: function() {
+        this._super();
+        this._on({
+            "click button": function( event ) {
+                var value = $( event.target ).parents( "li:first" )
+                .find( "input" ).val();
+                this.remove( value );
+            }
+        });
+    },
+    _renderList: function() {
+        var listItems = this.element.find( "li" );
+        listItems.find( "button" ).remove();
+        this._super();
+        listItems.each(function() {
+            var button = $( "<button>Remove</button>" ).button({
+                icons: { primary: "ui-icon-closethick" },
+                text: false
+            });
+            $( this ).append( button );
+        })
+    },
+    _destroy: function() {
+        this.element.find( "button" ).remove();
+        this._super();
+    }
+});
+
+$( "ul" ).todo();
